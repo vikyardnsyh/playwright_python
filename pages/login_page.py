@@ -6,7 +6,7 @@ class LoginPage(BasePage):
         self._username_field = page.locator("input[name='username']")
         self._password_field = page.locator("input[name='password']")
         self._login_button = page.locator("button[type='submit']")
-        self._profile_icon = page.locator(".nav-link-user") 
+        self._profile_icon = page.locator(".nav-link-user").wait_for(state="visible", timeout=15000)
         self._dropdown_title = page.locator(".dropdown-title")
 
     def get_welcome_text(self):
@@ -18,4 +18,5 @@ class LoginPage(BasePage):
         self.type_text(self._username_field, user)
         self.type_text(self._password_field, pwd)
         self.click(self._login_button)
+        page.wait_for_load_state("networkidle")
       

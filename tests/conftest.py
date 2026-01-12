@@ -15,7 +15,7 @@ def browser_context_args(browser_context_args):
 
 @pytest.fixture
 def login_page(page):
-    url = os.getenv("BASE_URL")
+    url = os.getenv("BASE_URL").strip().rstrip('/')
     page.goto(f"{url}/login")  
     return LoginPage(page)
 

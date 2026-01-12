@@ -1,11 +1,22 @@
+# Environments
 venv/
 .env
-.pytest_cache/
+pyvenv.cfg
 
+# Python cache
+__pycache__/
+*.pyc
+
+# Playwright & Pytest Results
+.pytest_cache/
 test-results/
 allure-results/
 allure-report/
 screenshots/
 videos/
+my_report_dir/
+results/
 
+# IDE
 .vscode/
+.idea/

@@ -10,7 +10,10 @@ load_dotenv()
 def browser_context_args(browser_context_args):
     return {
         **browser_context_args,
-        "ignore_https_errors": True
+        "ignore_https_errors": True,
+        "extra_http_headers": {
+            "ngrok-skip-browser-warning": "true"
+        }
     }
 
 @pytest.fixture

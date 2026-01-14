@@ -3,21 +3,13 @@ import pytest
 from pages.login_page import LoginPage
 
 @pytest.mark.sanity
-def test_successful_login_admin(login_page, page):
+def test_successful_login_admin(login_admin):
     """Scenario: [Positive] Admin Success Login"""
-    user = os.getenv("ADMIN_USER", "ayu")
-    pwd = os.getenv("ADMIN_PASS", "rahasia")
-    login_page.login_to_app(user, pwd)
-    welcome_msg = login_page.get_welcome_text()
-    assert "HALLO ADMIN" in welcome_msg
-    print(f"Dashboard admin welcome title : {welcome_msg}")
+    page = login_admin
+    assert page.locator("text=HALLO ADMIN").is_visible()
 
 @pytest.mark.regression
-def test_successful_login_member(login_page, page):
+def test_successful_login_member(login_users):
     """Scenario: [Positive] Member Success Login"""
-    user = os.getenv("REG_USER", "aldy")
-    pwd = os.getenv("REG_PASS", "PdhiBanten2!")
-    login_page.login_to_app(user, pwd)
-    welcome_msg = login_page.get_welcome_text()
-    assert "HALLO DOKTER" in welcome_msg
-    print(f"Dashboard member welcome title : {welcome_msg}")
+    page = login_users
+    assert page.locator("text=HALLO DOKTER").is_visible()

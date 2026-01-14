@@ -22,6 +22,20 @@ def login_page(page):
     page.goto(f"{url}/login")  
     return LoginPage(page)
 
+@pytest.fixture
+def login_admin(page, login_page):
+    user = os.getenv("ADMIN_USER")
+    pwd = os.getenv("ADMIN_PASS")
+    login_page.login_to_app(user, pwd)
+    return page
+
+@pytest.fixture
+def login_users(page, login_page):
+    user = os.getenv("REG_USER")
+    pwd = os.getenv("REG_PASS")
+    login_page.login_to_app(user, pwd)
+    return page
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

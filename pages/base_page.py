@@ -13,6 +13,11 @@ class BasePage:
         locator.wait_for(state="visible")
         locator.fill(text)
 
+    def type_and_enter(self, locator, text):
+        locator.wait_for(state="visible")
+        locator.fill(text)
+        locator.press("Enter")
+
     def select_option(self, locator, text):
         locator.wait_for(state="visible")
         locator.select_option(label=text)

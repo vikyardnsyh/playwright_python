@@ -4,18 +4,21 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:
+  workflow_dispatch: # Fitur untuk trigger manual dari tab Actions
+
 permissions:
-  contents: write
+  contents: write # Izin wajib agar bot bisa membuat branch gh-pages
 
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # Update ke v5 (lebih stabil)
       with:
         python-version: '3.11'
 
@@ -23,17 +26,19 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install allure-pytest # Pastikan terinstall untuk report
 
     - name: Install Playwright Browsers
       run: playwright install --with-deps
 
-      - name: Run Playwright tests
+    - name: Run Playwright tests
       env:
         BASE_URL: ${{ secrets.BASE_URL }}
-      run: pytest --tracing on --alluredir=allure-results/
-      continue-on-error: true
+      # Gunakan --alluredir=allure-results tanpa slash di akhir untuk konsistensi
+      run: pytest --tracing on --alluredir=allure-results
+      continue-on-error: true # Tetap lanjut ke report meski ada test yang failed
 
-      - name: Get Allure history
+    - name: Load Allure History
       uses: actions/checkout@v4
       if: always()
       continue-on-error: true
@@ -41,15 +46,15 @@ jobs:
         ref: gh-pages
         path: gh-pages
 
-    - name: Generate Allure Report
+    - name: Build Allure Report
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
         allure_results: allure-results
         allure_history: allure-history
-        keep_reports: 20 # Menyimpan history 20 run terakhir
+        keep_reports: 30
 
-    - name: Deploy Allure Report to GitHub Pages
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: always()
       with:
@@ -57,7 +62,7 @@ jobs:
         publish_dir: allure-history
         publish_branch: gh-pages
 
-    - name: Upload Playwright Traces
+    - name: Archive Playwright Traces
       if: always()
       uses: actions/upload-artifact@v4
       with:

@@ -31,5 +31,4 @@ class AdminAccount(BasePage):
         target_row = self.page.locator("tr").filter(has_text=username).first
         target_row.wait_for(state="visible")
         self.click(target_row.locator(self._delete_btn))
-        print(f"Success Delete Account: {username}")
         return self

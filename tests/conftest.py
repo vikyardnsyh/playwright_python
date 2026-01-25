@@ -36,6 +36,20 @@ def login_users(page, login_page):
     login_page.login_to_app(user, pwd)
     return page
 
+@pytest.fixture
+def cleanup_admin_account(login_admin):
+    page = login_admin
+
+    yield
+    # Code After Yield = 'AFTER TEST'
+    print("\n[Cleanup] Removing Test Data...")
+    from pages.admin_account_index_page import AdminAccount
+    index_page = AdminAccount(page)
+    index_page.go_to_admin_account_page()
+
+    # Panggil fungsi hapus yang kamu buat (contoh: berdasarkan username)
+    index_page.delete_account_by_username("gemini_user")
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

@@ -38,6 +38,12 @@ jobs:
       run: pytest --tracing on --alluredir=allure-results
       continue-on-error: true # Tetap lanjut ke report meski ada test yang failed
 
+    - name: Add Allure Environment Info
+      if: always()
+      run: |
+        echo "URL=${{ secrets.BASE_URL }}" > allure-results/environment.properties
+        echo "Executor=GitHub Actions" >> allure-results/environment.properties
+
     - name: Load Allure History
       uses: actions/checkout@v4
       if: always()

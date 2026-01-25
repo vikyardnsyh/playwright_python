@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Scenario: [Positive] Member Success Login","0","test_successful_login_member[chromium]","tests","Sun Jan 25 13:47:38 UTC 2026","broken","Sun Jan 25 13:47:38 UTC 2026","","test_login","",""
+"Scenario: [Positive] Admin Success Login","0","test_successful_login_admin[chromium]","tests","Sun Jan 25 13:47:36 UTC 2026","broken","Sun Jan 25 13:47:36 UTC 2026","","test_login","",""
+"","0","test_add_new_admin[chromium]","tests","Sun Jan 25 13:47:18 UTC 2026","broken","Sun Jan 25 13:47:18 UTC 2026","","test_adminaccount","",""
+"","0","test_delete_account_user[chromium]","tests","Sun Jan 25 13:47:29 UTC 2026","broken","Sun Jan 25 13:47:29 UTC 2026","","test_adminaccount","",""

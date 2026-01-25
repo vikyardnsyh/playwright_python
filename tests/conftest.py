@@ -54,6 +54,12 @@ def cleanup_admin_account(login_admin):
 def pytest_runtest_makereport(item, call):
     outcome = yield
     rep = outcome.get_result()
+    
     if rep.when == 'call' and rep.failed:
-        page = item.funcargs['page']
-        allure.attach(page.screenshot(), name="screenshot_failure", attachment_type=allure.attachment_type.PNG)
+        page = item.funcargs.get('page') # Mengambil objek page dari playwright
+        if page:
+            allure.attach(
+                page.screenshot(full_page=True),
+                name="screenshot_error",
+                attachment_type=allure.attachment_type.PNG
+            )

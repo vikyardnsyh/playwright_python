@@ -34,7 +34,10 @@ jobs:
     - name: Run Playwright tests
       env:
         BASE_URL: ${{ secrets.BASE_URL }}
-      # Gunakan --alluredir=allure-results tanpa slash di akhir untuk konsistensi
+        ADMIN_USER: ${{ secrets.ADMIN_USER }}
+        ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
+        REG_USER: ${{ secrets.REG_USER }}
+        REG_PASS: ${{ secrets.REG_PASS }}
       run: pytest --tracing on --alluredir=allure-results
       continue-on-error: true # Tetap lanjut ke report meski ada test yang failed
 

@@ -1,0 +1,1 @@
+Empty state message: Tidak ada dokter yang cocok dengan kata kunci pencarian.

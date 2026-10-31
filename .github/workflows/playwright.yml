@@ -12,7 +12,7 @@ permissions:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
         pip install allure-pytest
 
     - name: Install Playwright Browsers
-      run: playwright install --with-deps
+      run: playwright install --with-deps chromium
 
     - name: Run Playwright tests
       env:
@@ -38,12 +38,13 @@ jobs:
         ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
         REG_USER: ${{ secrets.REG_USER }}
         REG_PASS: ${{ secrets.REG_PASS }}
-      run: pytest --tracing on --alluredir=allure-results/
+      run: pytest --tracing on --alluredir=allure-results
       continue-on-error: true
 
     - name: Add Allure Environment Info
       if: always()
       run: |
+        mkdir -p allure-results
         echo "URL=${{ secrets.BASE_URL }}" > allure-results/environment.properties
         echo "Executor=GitHub Actions" >> allure-results/environment.properties
 
@@ -58,11 +59,8 @@ jobs:
     - name: Build Allure Report
       uses: simple-elf/allure-report-action@master
       if: always()
-      id: allure-report
       with:
         allure_results: allure-results
-        gh_pages: gh-pages
-        allure_report: allure-report
         allure_history: allure-history
         keep_reports: 30
 
